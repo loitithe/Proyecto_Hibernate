@@ -8,10 +8,10 @@ import javax.persistence.*;
 @Entity
 public class Datos_Profesionales implements Serializable {
 
-    @Column(name = "sueldo_bruto")
+    @Column(name = "sueldo_bruto", columnDefinition = "DECIMAL(8,2)")
     private double sueldo_bruto;
 
-    @Column(name = "categoria")
+    @Column(name = "categoria", columnDefinition = "ENUM('A','B','E','D')")
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 

@@ -24,6 +24,7 @@ public class Proyecto {
     private Date fecha_fin;
 
     @ManyToOne
+    @JoinColumn(name = "dni_jefe_proyecto")
     private Empleado empleado_jefe;
 
     @OneToMany(mappedBy = "proyecto_asignado")

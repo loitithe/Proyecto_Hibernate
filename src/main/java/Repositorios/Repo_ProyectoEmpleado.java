@@ -3,7 +3,7 @@ package Repositorios;
 import java.util.List;
 
 import org.hibernate.Session;
-
+import org.hibernate.Transaction;
 import com.example.Entidades.Proyecto_Empleado;
 
 public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
@@ -15,26 +15,31 @@ public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
 
     @Override
     public void guardar(Proyecto_Empleado t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'guardar'");
+        Transaction trx = this.session.beginTransaction();
+        session.save(t);
+        trx.commit();
     }
 
     @Override
     public List<Proyecto_Empleado> listarTodos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarTodos'");
+        Transaction trx = this.session.beginTransaction();
+        List<Proyecto_Empleado> lista_ProyectoEmpleado = session.createQuery("From asig_proyecto").getResultList();
+        trx.commit();
+        return lista_ProyectoEmpleado;
     }
 
     @Override
     public void actualizar(Proyecto_Empleado t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizar'");
+        Transaction trx = this.session.beginTransaction();
+        session.update(t);
+        trx.commit();
     }
 
     @Override
     public void eliminar(Proyecto_Empleado t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+        Transaction trx = this.session.beginTransaction();
+        session.save(t);
+        trx.commit();
     }
 
 }

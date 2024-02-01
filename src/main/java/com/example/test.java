@@ -15,7 +15,7 @@ public class test {
 
         Repo_Empleado repo_Empleado = new Repo_Empleado(session);
 
-        Empleado empleado1 = new Empleado("4444", "jowei");
+        Empleado empleado1 = new Empleado("2222", "jowei");
         repo_Empleado.guardar(empleado1);
         session.close();
     }

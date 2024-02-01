@@ -6,6 +6,7 @@ import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "asig_proyecto")
 public class Proyecto_Empleado implements Serializable {
 
     @Id
@@ -15,12 +16,12 @@ public class Proyecto_Empleado implements Serializable {
 
     @ManyToOne
     @Id
-    @JoinColumn(name = "dni")
+    @JoinColumn(name = "dni_emp")
     private Empleado empleado_asignado;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_proyecto")
     private Proyecto proyecto_asignado;
 
     public Proyecto_Empleado(Date fecha_inicio, Empleado empleado, Proyecto proyecto) {
