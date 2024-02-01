@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.example.Entidades.Empleado;
-//Crear, borrar y modificar los datos de un empleado
 
 public class Repo_Empleado implements Repositorio<Empleado> {
     private Session session;
@@ -30,14 +29,17 @@ public class Repo_Empleado implements Repositorio<Empleado> {
         return listaEmpleados;
     }
 
+    public void buscarEmpleado(String dni) {
+        Empleado empleado = session.createQuery("From Empleado where e.id=:id").uniqueResult()
+       
+    }
+
     @Override
     public void actualizar(Empleado t) {
         Transaction trx = this.session.beginTransaction();
         session.update(t);
         trx.commit();
     }
-
-    
 
     @Override
     public void eliminar(Empleado t) {
