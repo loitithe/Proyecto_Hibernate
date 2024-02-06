@@ -27,6 +27,10 @@ public class Datos_Profesionales implements Serializable {
         this.empleado = empleado;
     }
 
+    public Datos_Profesionales() {
+        //TODO Auto-generated constructor stub
+    }
+
     public double getSueldo_bruto() {
         return sueldo_bruto;
     }

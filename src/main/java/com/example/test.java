@@ -2,6 +2,8 @@ package com.example;
 
 import org.hibernate.Session;
 
+import com.example.Entidades.Categoria;
+import com.example.Entidades.Datos_Profesionales;
 import com.example.Entidades.Empleado;
 
 import Repositorios.Repo_DatosProf;
@@ -122,6 +124,7 @@ public class test {
             opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
+
                     repo_Empleado.guardar(crearEmpleado());
                     break;
                 case 2:
@@ -151,12 +154,81 @@ public class test {
         String dni = pedirString("Introduce DNI :");
         String nombre = pedirString("Introduce el nombre :");
         Empleado empleado = new Empleado(dni, nombre);
+        System.out.println("El empleado sera de plantilla?\nS / N");
+        String opt = sc.next().trim().toUpperCase();
+        if (opt.equals("S")) {
+            empleado.setDatos_Profesionales(crerDatosProfesionales());
+        }
         return empleado;
+    }
+
+    private Datos_Profesionales crerDatosProfesionales() {
+        Datos_Profesionales datos_Profesionales = new Datos_Profesionales();
+        double sueldo_bruto = pedirDouble("Introduce el sueldo bruto");
+        datos_Profesionales.setSueldo_bruto(sueldo_bruto);
+        switch (pedirCategoria()) {
+            case 1:
+                datos_Profesionales.setCategoria(Categoria.A);
+                break;
+            case 2:
+                datos_Profesionales.setCategoria(Categoria.B);
+                break;
+            case 3:
+                datos_Profesionales.setCategoria(Categoria.C);
+                break;
+            case 4:
+                datos_Profesionales.setCategoria(Categoria.D);
+                break;
+            default:
+                break;
+        }
+        return datos_Profesionales;
+    }
+
+    private int pedirCategoria() {
+        int categoria = -1;
+        do {
+            System.out.println("Elige una categoria");
+            System.out.println("\n1. A\n2. B\n3. C\n4. D");
+            try {
+                categoria = sc.nextInt();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Introduce una opcion valida");
+            }
+        } while (categoria != 1 || categoria != 2 || categoria != 3 || categoria != 4);
+        return categoria;
+    }
+
+    private double pedirDouble(String mensaje) {
+        System.out.println(mensaje);
+        double entrada = -1;
+        do {
+            try {
+                entrada = sc.nextDouble();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                System.out.println("Debes introducir un valor numerico");
+            }
+        } while (entrada != -1);
+
+        return entrada;
     }
 
     public static String pedirString(String mensaje) {
         System.out.println(mensaje);
-        return sc.next();
+        String entrada = "";
+        do {
+            try {
+                entrada = sc.next();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Debes introducir un string");
+            }
+        } while (!entrada.equals(""));
+
+        return entrada;
     }
 
 }

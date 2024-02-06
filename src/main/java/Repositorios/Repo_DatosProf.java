@@ -15,6 +15,7 @@ public class Repo_DatosProf implements Repositorio<Datos_Profesionales> {
     public Repo_DatosProf(Session session) {
         this.session = session;
     }
+    
 
     @Override
     public void guardar(Datos_Profesionales t) {
