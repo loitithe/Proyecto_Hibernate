@@ -2,10 +2,9 @@ package Repositorios;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.example.Entidades.Empleado;
 
@@ -31,13 +30,16 @@ public class Repo_Empleado implements Repositorio<Empleado> {
         return listaEmpleados;
     }
 
-    public void buscarEmpleado(String dni) {
+    public Empleado buscarEmpleado(String dni) {
         Transaction trx = this.session.beginTransaction();
 
-        Query query = session.createQuery("From Empleado where e.dni=:dni");
+        Query query = session.createQuery("From Empleado e where e.dni=:dni");
         query.setParameter("dni", dni);
-        int elementos_afectados = query.executeUpdate();
-        System.out.println("Se ha encontrado " + elementos_afectados + " coincidencias.");
+
+        Empleado empleado = (Empleado) query.uniqueResult();
+        trx.commit();
+        return empleado;
+
     }
 
     @Override

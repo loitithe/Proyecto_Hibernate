@@ -31,6 +31,10 @@ public class Empleado {
         this.nombre = nombre;
     }
 
+    public Empleado() {
+        //TODO Auto-generated constructor stub
+    }
+
     // Getters y Setters
     public String getDni() {
         return dni;
@@ -53,6 +57,7 @@ public class Empleado {
     }
 
     public void setDatos_Profesionales(Datos_Profesionales datos_Profesionales) {
+        datos_Profesionales.setEmpleado(this);
         this.datos_Profesionales = datos_Profesionales;
     }
 
