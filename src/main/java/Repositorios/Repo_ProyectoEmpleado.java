@@ -49,8 +49,8 @@ public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
     public void borrarParticipacion(Proyecto p, Empleado e) {
         Transaction trx = this.session.beginTransaction();
         Query query = this.session.createQuery(
-                "From asig_proyecto a where a.empleado_asignado.dni=:dni AND a.proyecto_asignado.id_proyecto=:id");
-        query.setParameter("dni_emp", e.getDni());
+                "From Proyecto_Empleado a where a.empleado_asignado.dni=:dni AND a.proyecto_asignado.id_proyecto=:id");
+        query.setParameter("dni", e.getDni());
         query.setParameter("id", p.getId_proyecto());
         Proyecto_Empleado proyecto_Empleado = (Proyecto_Empleado) query.uniqueResult();
         eliminar(proyecto_Empleado);

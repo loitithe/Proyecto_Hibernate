@@ -19,6 +19,9 @@ public class Proyecto_Empleado implements Serializable {
     @JoinColumn(name = "dni_emp")
     private Empleado empleado_asignado;
 
+    public Proyecto_Empleado() {
+    }
+
     @Id
     @ManyToOne
     @JoinColumn(name = "id_proyecto")
@@ -65,7 +68,5 @@ public class Proyecto_Empleado implements Serializable {
     public void setProyecto_asignado(Proyecto proyecto) {
         this.proyecto_asignado = proyecto;
     }
-
-    
 
 }
