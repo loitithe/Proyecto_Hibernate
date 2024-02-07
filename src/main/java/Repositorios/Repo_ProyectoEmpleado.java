@@ -42,7 +42,7 @@ public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
     @Override
     public void eliminar(Proyecto_Empleado t) {
         Transaction trx = this.session.beginTransaction();
-        session.save(t);
+        session.delete(t);
         trx.commit();
     }
 
@@ -53,6 +53,7 @@ public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
         query.setParameter("dni", e.getDni());
         query.setParameter("id", p.getId_proyecto());
         Proyecto_Empleado proyecto_Empleado = (Proyecto_Empleado) query.uniqueResult();
-        eliminar(proyecto_Empleado);
+        session.delete(proyecto_Empleado);
+        trx.commit();
     }
 }
