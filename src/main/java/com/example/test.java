@@ -101,8 +101,9 @@ public class test {
     }
 
     private static void mostrarPlantilla() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mostrarPlantilla'");
+        for (Empleado e : repo_Empleado.listarTodos()) {
+            System.out.println(e.toString());
+        }
     }
 
     private static void mostrarDatosProyecto() {
@@ -111,8 +112,7 @@ public class test {
     }
 
     private static void cambiarJefe() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cambiarJefe'");
+
     }
 
     private static void asignarProyecto() {

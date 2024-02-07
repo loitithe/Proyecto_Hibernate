@@ -76,4 +76,11 @@ public class Empleado {
     public void removeListaProyectoEmpleado(Proyecto_Empleado proyecto_Empleado) {
         this.listaProyecto_Empleados.remove(proyecto_Empleado);
     }
+
+    @Override
+    public String toString() {
+        return "Empleado [dni=" + dni + ", nombre=" + nombre + ", datos_Profesionales=" + datos_Profesionales + "]";
+    }
+
+    
 }

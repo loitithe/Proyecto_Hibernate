@@ -28,7 +28,7 @@ public class Datos_Profesionales implements Serializable {
     }
 
     public Datos_Profesionales() {
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     public double getSueldo_bruto() {
@@ -53,6 +53,11 @@ public class Datos_Profesionales implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    @Override
+    public String toString() {
+        return "Datos_Profesionales [sueldo_bruto=" + sueldo_bruto + ", categoria=" + categoria + "]";
     }
 
 }
