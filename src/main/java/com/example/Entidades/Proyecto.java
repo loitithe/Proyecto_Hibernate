@@ -1,6 +1,6 @@
 package com.example.Entidades;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -36,6 +36,10 @@ public class Proyecto {
         this.fecha_inicio = fecha_inicio;
     }
 
+    public Proyecto() {
+        // TODO Auto-generated constructor stub
+    }
+
     public int getId_proyecto() {
         return id_proyecto;
     }
@@ -56,8 +60,8 @@ public class Proyecto {
         return fecha_inicio;
     }
 
-    public void setFecha_inicio(Date fecha_inicio) {
-        this.fecha_inicio = fecha_inicio;
+    public void setFecha_inicio(java.util.Date date) {
+        this.fecha_inicio = date;
     }
 
     public Date getFecha_fin() {
@@ -82,6 +86,14 @@ public class Proyecto {
 
     public void setListaProyecto_empleado(List<Proyecto_Empleado> listaProyecto_empleado) {
         this.listaProyecto_empleado = listaProyecto_empleado;
+    }
+
+    public void addListaProyectoEmpleado(Proyecto_Empleado proyecto_Empleado) {
+        this.listaProyecto_empleado.add(proyecto_Empleado);
+    }
+
+    public void removeListaProyectoEmpleado(Proyecto_Empleado proyecto_Empleado) {
+        this.listaProyecto_empleado.remove(proyecto_Empleado);
     }
 
 }

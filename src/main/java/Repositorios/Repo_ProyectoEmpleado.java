@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import com.example.Entidades.Empleado;
+import com.example.Entidades.Proyecto;
 import com.example.Entidades.Proyecto_Empleado;
 
 public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
@@ -42,4 +46,13 @@ public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
         trx.commit();
     }
 
+    public void borrarParticipacion(Proyecto p, Empleado e) {
+        Transaction trx = this.session.beginTransaction();
+        Query query = this.session.createQuery(
+                "From asig_proyecto a where a.empleado_asignado.dni=:dni AND a.proyecto_asignado.id_proyecto=:id");
+        query.setParameter("dni_emp", e.getDni());
+        query.setParameter("id", p.getId_proyecto());
+        Proyecto_Empleado proyecto_Empleado = (Proyecto_Empleado) query.uniqueResult();
+        eliminar(proyecto_Empleado);
+    }
 }

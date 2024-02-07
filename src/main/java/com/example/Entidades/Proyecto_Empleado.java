@@ -1,7 +1,7 @@
 package com.example.Entidades;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -29,6 +29,9 @@ public class Proyecto_Empleado implements Serializable {
         this.fecha_inicio = fecha_inicio;
         this.empleado_asignado = empleado;
         this.proyecto_asignado = proyecto;
+
+        empleado.addListaProyectoEmpleado(this);
+        proyecto.addListaProyectoEmpleado(this);
     }
 
     public Date getFecha_inicio() {
@@ -62,5 +65,7 @@ public class Proyecto_Empleado implements Serializable {
     public void setProyecto_asignado(Proyecto proyecto) {
         this.proyecto_asignado = proyecto;
     }
+
+    
 
 }

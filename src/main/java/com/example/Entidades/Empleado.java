@@ -32,7 +32,7 @@ public class Empleado {
     }
 
     public Empleado() {
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     // Getters y Setters
@@ -69,4 +69,11 @@ public class Empleado {
         this.listaProyecto_Empleados = listaProyecto_Empleados;
     }
 
+    public void addListaProyectoEmpleado(Proyecto_Empleado proyecto_Empleado) {
+        this.listaProyecto_Empleados.add(proyecto_Empleado);
+    }
+
+    public void removeListaProyectoEmpleado(Proyecto_Empleado proyecto_Empleado) {
+        this.listaProyecto_Empleados.remove(proyecto_Empleado);
+    }
 }

@@ -22,6 +22,13 @@ public class Repo_Empleado implements Repositorio<Empleado> {
         trx.commit();
     }
 
+    public boolean existeEmpleado(String dni) {
+        if (buscarEmpleado(dni) != null) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public List<Empleado> listarTodos() {
         Transaction trx = this.session.beginTransaction();

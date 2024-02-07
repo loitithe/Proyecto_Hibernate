@@ -5,12 +5,16 @@ import org.hibernate.Session;
 import com.example.Entidades.Categoria;
 import com.example.Entidades.Datos_Profesionales;
 import com.example.Entidades.Empleado;
+import com.example.Entidades.Proyecto;
+import com.example.Entidades.Proyecto_Empleado;
 
 import Repositorios.Repo_DatosProf;
 import Repositorios.Repo_Empleado;
 import Repositorios.Repo_Proyecto;
 import Repositorios.Repo_ProyectoEmpleado;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class test {
@@ -49,7 +53,7 @@ public class test {
         int opcion = -1;
         try {
             do {
-                System.out.println("1.Empleados\n2.Proyectos\n3.Asignar proyecto\4.Terminar participacion" +
+                System.out.println("1.Empleados\n2.Proyectos\n3.Asignar proyecto\n4.Terminar participacion" +
                         "\n5.Cambiar jefe proyecto\n6.Mostrar datos proyecto\n7.Empleados plantilla\n8.Mostrar jefes proyecto\n0.Salir");
                 opcion = sc.nextInt();
 
@@ -64,7 +68,10 @@ public class test {
                         asignarProyecto();
                         break;
                     case 4:
-                        terminaParticipacion();
+                        repo_ProyectoEmpleado.borrarParticipacion(
+                                repo_Proyecto.buscarProyecto(pedirInt("Id del proyecto")),
+                                repo_Empleado.buscarEmpleado(pedirString("Introducir dni")));
+
                         break;
                     case 5:
                         cambiarJefe();
@@ -76,7 +83,7 @@ public class test {
                         mostrarPlantilla();
                         break;
                     case 8:
-                        mostrarJefeProtecto();
+                        mostrarJefeProyecto();
                         break;
                     default:
                         break;
@@ -88,7 +95,7 @@ public class test {
 
     }
 
-    private static void mostrarJefeProtecto() {
+    private static void mostrarJefeProyecto() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mostrarJefeProtecto'");
     }
@@ -108,19 +115,61 @@ public class test {
         throw new UnsupportedOperationException("Unimplemented method 'cambiarJefe'");
     }
 
-    private static void terminaParticipacion() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'terminaParticipacion'");
-    }
-
     private static void asignarProyecto() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'asignarProyecto'");
+        String dni = pedirString("Introduce el dni del empleado");
+        if (repo_Empleado.existeEmpleado(dni)) {
+            int id_proyecto = pedirInt("Introduce el id del proyecto");
+            if (repo_Proyecto.existeProyecto(id_proyecto)) {
+                Date date = new Date();
+                Proyecto_Empleado proyecto_Empleado = new Proyecto_Empleado(date, repo_Empleado.buscarEmpleado(dni),
+                        repo_Proyecto.buscarProyecto(id_proyecto));
+
+                repo_ProyectoEmpleado.guardar(proyecto_Empleado);
+
+            } else {
+                System.out.println("El proyecto con id " + id_proyecto + " no existe");
+            }
+        } else {
+            System.out.println("El empleado con dni " + dni + " no existe");
+        }
+
     }
 
     private static void menuProyectos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'menuProyectos'");
+        int opcion = -1;
+        do {
+            System.out.println("1.Crear\n2.Borrar\n3.Modificar\n0.Atras");
+            opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    Proyecto proyecto = crearProyecto();
+                    repo_Proyecto.guardar(proyecto);
+
+                    break;
+                case 2:
+                    repo_Empleado.eliminar(buscarEmpleado());
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                    menuPrincipal();
+                    break;
+                default:
+                    break;
+            }
+        } while (opcion != 0);
+    }
+
+    private static Proyecto crearProyecto() {
+        Proyecto proyecto = new Proyecto();
+        // DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        proyecto.setNombre(pedirString("Introduce el nombre del proyecto"));
+        proyecto.setFecha_inicio(date);
+        System.out.println("creando proyecto... ");
+
+        return proyecto;
     }
 
     private static void menuEmpleados() {
@@ -158,13 +207,8 @@ public class test {
     }
 
     private static Empleado buscarEmpleado() {
-        String dni = pedirString("Introduce el DNI del empleado a borrar");
-        for (Empleado e : repo_Empleado.listarTodos()) {
-            if (e.getDni().equals(dni)) {
-                return e;
-            }
-        }
-        return null;
+        String dni = pedirString("Introduce el DNI del empleado a buscar");
+        return repo_Empleado.buscarEmpleado(dni);
     }
 
     private static Empleado crearEmpleado() {
@@ -227,6 +271,21 @@ public class test {
         do {
             try {
                 entrada = Double.parseDouble(sc.next());
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Debes introducir un valor numerico");
+            }
+
+        } while (entrada < 0);
+        return entrada;
+    }
+
+    private static int pedirInt(String mensaje) {
+        System.out.println(mensaje);
+        int entrada = -1;
+        do {
+            try {
+                entrada = Integer.parseInt(sc.next());
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Debes introducir un valor numerico");
