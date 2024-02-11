@@ -54,7 +54,7 @@ public class test {
         try {
             do {
                 System.out.println("1.Empleados\n2.Proyectos\n3.Asignar proyecto\n4.Terminar participacion" +
-                        "\n5.Cambiar jefe proyecto\n6.Mostrar datos proyecto\n7.Empleados plantilla\n8.Mostrar jefes proyecto\n0.Salir");
+                        "\n5.Cambiar jefe proyecto\n6.Mostrar datos proyecto\n7.Empleados plantilla\n8.Mostrar jefe proyecto\n0.Salir");
                 opcion = sc.nextInt();
 
                 switch (opcion) {
@@ -74,16 +74,26 @@ public class test {
 
                         break;
                     case 5:
-                        cambiarJefe();
+                        int id = pedirInt("id del proyecto :");
+                        Empleado e = repo_Empleado.buscarEmpleado(pedirString("Dni empleado "));
+                        if (e.getDatos_Profesionales() != null) {
+                            repo_Proyecto.cambiarJefe(id, e);
+                        } else
+                            System.out.println("el empleado jefe debe ser de plantilla");
+
                         break;
                     case 6:
-                        mostrarDatosProyecto();
+                        mostrarDatosProyecto(pedirInt("Id del proyecto :"));
                         break;
                     case 7:
                         mostrarPlantilla();
                         break;
                     case 8:
-                        mostrarJefeProyecto();
+                        // System.out.println(repo_Proyecto.mostrarJefeProyecto(pedirInt("Id del
+                        // proyecto")));
+                        for (Proyecto p : repo_Proyecto.listarTodos()) {
+                            System.out.println(p.getEmpleado_jefe().toString());
+                        }
                         break;
                     default:
                         break;
@@ -95,36 +105,33 @@ public class test {
 
     }
 
-    private static void mostrarJefeProyecto() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mostrarJefeProtecto'");
-    }
-
     private static void mostrarPlantilla() {
         for (Empleado e : repo_Empleado.listarTodos()) {
             System.out.println(e.toString());
         }
     }
 
-    private static void mostrarDatosProyecto() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mostrarDatosProyecto'");
-    }
+    private static void mostrarDatosProyecto(int id) {
 
-    private static void cambiarJefe() {
-
+        System.out.println(repo_Proyecto.buscarProyecto(id).toString());
     }
 
     private static void asignarProyecto() {
         String dni = pedirString("Introduce el dni del empleado");
-        if (repo_Empleado.existeEmpleado(dni)) {
+        Empleado e = repo_Empleado.buscarEmpleado(dni);
+        if (e != null) {
             int id_proyecto = pedirInt("Introduce el id del proyecto");
-            if (repo_Proyecto.existeProyecto(id_proyecto)) {
+            Proyecto p = repo_Proyecto.buscarProyecto(id_proyecto);
+            if (p != null) {
                 Date date = new Date();
-                Proyecto_Empleado proyecto_Empleado = new Proyecto_Empleado(date, repo_Empleado.buscarEmpleado(dni),
-                        repo_Proyecto.buscarProyecto(id_proyecto));
-
-                repo_ProyectoEmpleado.guardar(proyecto_Empleado);
+                for (Proyecto_Empleado pe : p.getListaProyecto_empleado()) {
+                    if (!pe.getEmpleado_asignado().getDni().equals(e.getDni())) {
+                        Proyecto_Empleado proyecto_Empleado = new Proyecto_Empleado(date,
+                                repo_Empleado.buscarEmpleado(dni),
+                                repo_Proyecto.buscarProyecto(id_proyecto));
+                        repo_ProyectoEmpleado.guardar(proyecto_Empleado);
+                    }
+                }
 
             } else {
                 System.out.println("El proyecto con id " + id_proyecto + " no existe");
@@ -147,10 +154,14 @@ public class test {
 
                     break;
                 case 2:
-                    repo_Empleado.eliminar(buscarEmpleado());
+                    repo_Proyecto.eliminar(repo_Proyecto.buscarProyecto(pedirInt("Id proyecyo")));
                     break;
                 case 3:
-
+                    Proyecto p = repo_Proyecto.buscarProyecto(pedirInt("id del proyecto"));
+                    p.setNombre(pedirString("nuevo nombre proyecto "));
+                    p.setEmpleado_jefe(
+                            repo_Empleado.buscarEmpleado(pedirString("Introduce el dni del empleado jefe nuevo")));
+                    repo_Proyecto.actualizar(p);
                     break;
                 case 4:
                     menuPrincipal();
@@ -167,6 +178,7 @@ public class test {
         Date date = new Date();
         proyecto.setNombre(pedirString("Introduce el nombre del proyecto"));
         proyecto.setFecha_inicio(date);
+
         System.out.println("creando proyecto... ");
 
         return proyecto;
@@ -187,6 +199,7 @@ public class test {
                         Datos_Profesionales datos_Profesionales = crerDatosProfesionales();
                         empleado.setDatos_Profesionales(datos_Profesionales);
                         repo_DatosProf.guardar(datos_Profesionales);
+                        repo_Empleado.guardar(empleado);
                     }
 
                     break;
@@ -194,7 +207,16 @@ public class test {
                     repo_Empleado.eliminar(buscarEmpleado());
                     break;
                 case 3:
+                    String dni = pedirString("Dni empleado a modificar");
+                    if (repo_Empleado.existeEmpleado(dni)) {
+                        Empleado e = repo_Empleado.buscarEmpleado(dni);
 
+                        e.setNombre(pedirString("Introduce nombre"));
+                        e.setDatos_Profesionales(crerDatosProfesionales());
+
+                        repo_DatosProf.actualizar(e.getDatos_Profesionales());
+                        repo_Empleado.actualizar(e);
+                    }
                     break;
                 case 4:
                     menuPrincipal();

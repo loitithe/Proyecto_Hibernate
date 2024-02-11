@@ -37,6 +37,11 @@ public class Proyecto_Empleado implements Serializable {
         proyecto.addListaProyectoEmpleado(this);
     }
 
+    @Override
+    public String toString() {
+        return "Proyecto_Empleado [fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + "]";
+    }
+
     public Date getFecha_inicio() {
         return fecha_inicio;
     }

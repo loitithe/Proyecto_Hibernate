@@ -1,5 +1,6 @@
 package Repositorios;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -53,7 +54,9 @@ public class Repo_ProyectoEmpleado implements Repositorio<Proyecto_Empleado> {
         query.setParameter("dni", e.getDni());
         query.setParameter("id", p.getId_proyecto());
         Proyecto_Empleado proyecto_Empleado = (Proyecto_Empleado) query.uniqueResult();
-        session.delete(proyecto_Empleado);
+        Date date = new Date();
+        proyecto_Empleado.setFecha_fin(date);
+        session.update(proyecto_Empleado);
         trx.commit();
     }
 }

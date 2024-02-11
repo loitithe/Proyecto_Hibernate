@@ -35,6 +35,15 @@ public class Proyecto {
         this.nombre = nombre;
         this.fecha_inicio = fecha_inicio;
     }
+    
+
+    @Override
+    public String toString() {
+        return "Proyecto [id_proyecto=" + id_proyecto + ", nombre=" + nombre + ", fecha_inicio=" + fecha_inicio
+                + ", fecha_fin=" + fecha_fin + ", empleado_jefe=" + empleado_jefe + ", listaProyecto_empleado="
+                + listaProyecto_empleado + "]";
+    }
+
 
     public Proyecto() {
         // TODO Auto-generated constructor stub

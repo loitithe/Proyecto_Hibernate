@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import com.example.Entidades.Empleado;
 import com.example.Entidades.Proyecto;
 import com.example.Entidades.Proyecto_Empleado;
 
@@ -46,12 +48,12 @@ public class Repo_Proyecto implements Repositorio<Proyecto> {
     }
 
     public Proyecto buscarProyecto(int id) {
-        for (Proyecto p : listarTodos()) {
-            if (p.getId_proyecto() == (id)) {
-                return p;
-            }
-        }
-        return null;
+        Transaction trx = this.session.beginTransaction();
+        Query query = this.session.createQuery("From Proyecto p where p.id=:id");
+        query.setParameter("id", id);
+        Proyecto p = (Proyecto)query.uniqueResult();
+        trx.commit();
+        return p;
 
     }
 
@@ -60,6 +62,28 @@ public class Repo_Proyecto implements Repositorio<Proyecto> {
             return false;
         }
         return true;
+    }
+
+    public void cambiarJefe(int id,Empleado e) {
+
+        Transaction trx = this.session.beginTransaction();
+        Query query = this.session.createQuery("From Proyecto p where p.id=:id");
+        query.setParameter("id", id);
+        Proyecto p = (Proyecto)query.uniqueResult();
+        p.setEmpleado_jefe(e);
+
+        trx.commit();
+    }
+
+    public String mostrarJefeProyecto(int id) {
+        Transaction trx = this.session.beginTransaction();
+        Query query = this.session.createQuery("From Proyecto p where p.id=:id");
+        query.setParameter("id", id);
+        Proyecto p = (Proyecto)query.uniqueResult();
+   
+
+        trx.commit();
+        return p.getEmpleado_jefe().toString();
     }
 
 }

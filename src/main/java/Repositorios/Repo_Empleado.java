@@ -63,4 +63,8 @@ public class Repo_Empleado implements Repositorio<Empleado> {
         trx.commit();
     }
 
+    public void modificar(Empleado e) {
+       
+    }
+
 }
